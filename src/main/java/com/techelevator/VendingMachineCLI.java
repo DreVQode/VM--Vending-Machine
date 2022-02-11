@@ -2,6 +2,9 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.io.FileNotFoundException;
+import java.util.Map;
+
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
@@ -21,34 +24,41 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	public void run() {
-//		VendingMachine vendingMachine = new VendingMachine();
-//		vendingMachine.getInventory();
+	public void run() throws FileNotFoundException {
+		VendingMachine vendoMatic800 = new VendingMachine();
 
 
-		while (true) {
+		boolean exitProgram = false;
+		boolean start2ndMenu = false;
+		while (!exitProgram) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				// display vending machine items
+				System.out.println(vendoMatic800.getInventory());
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				// do purchase
+				start2ndMenu = true;
+				while (start2ndMenu) {
+					String choice2 = (String) menu.getChoiceFromOptions(SECOND_MENU_OPTIONS);
+
+					if (choice2.equals(SECOND_MENU_FEED_MONEY)) {
+						// feed money
+					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
+						// select product
+					} else if (choice2.equals(SECOND_MENU_FINISH_TRANSACTION)) {
+						start2ndMenu = false;
+					}
+				}
+			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+				exitProgram = true;
 			}
 		}
-	}
-	while (true) {
-		String choice = (String) menu.getChoiceFromOptions(SECOND_MENU_OPTIONS);
 
-		if (choice.equals(SECOND_MENU_FEED_MONEY)) {
-			// display vending machine items
-		} else if (choice.equals(SECOND_MENU_SELECT_PRODUCT)) {
-			// do purchase
-		}
+
 	}
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();

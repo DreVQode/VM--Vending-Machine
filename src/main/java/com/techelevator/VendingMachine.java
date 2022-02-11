@@ -22,7 +22,7 @@ public class VendingMachine {
     }
 
     public void loadInventory(String fileName) throws FileNotFoundException {
-        File inputFile = new File(fileName);
+        File inputFile = new File("vendingmachine.csv");
         try (Scanner scanner = new Scanner(inputFile)) {
             while (scanner.hasNextLine()) {
                 String lineFromFile = scanner.nextLine();
@@ -34,7 +34,6 @@ public class VendingMachine {
                 Item item = null;
                 if (category.equalsIgnoreCase("chip")) {
                     item = new Chip(itemName, price);
-//                    need to add other item subclasses and count
                 } else if(category.equalsIgnoreCase("candy")) {
                     item = new Candy(itemName, price);
                 }  else if(category.equalsIgnoreCase("drink")) {
@@ -42,10 +41,9 @@ public class VendingMachine {
                 }else {
                     item = new Gum(itemName, price);
                 }
-
-
                 inventory.put(slotIdentifier, item);
             }
         }
+
     }
 }
