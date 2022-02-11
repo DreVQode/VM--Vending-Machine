@@ -41,7 +41,8 @@ public class VendingMachineCLI {
 					String choice2 = (String) menu.getChoiceFromOptions(SECOND_MENU_OPTIONS);
 
 					if (choice2.equals(SECOND_MENU_FEED_MONEY)) {
-						// feed money
+						Money money = new Money();
+						int customerBalance = money.feedMoney();
 					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
 						// select product
 					} else if (choice2.equals(SECOND_MENU_FINISH_TRANSACTION)) {

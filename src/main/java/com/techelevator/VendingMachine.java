@@ -9,13 +9,13 @@ import java.util.TreeMap;
 public class VendingMachine {
     private Map<String,Item> inventory = new TreeMap<>();
 
-    public VendingMachine(Map inventory) {
-        this.inventory = inventory;
-    }
-
-    public VendingMachine() {
-
-    }
+//    public VendingMachine(Map inventory) {
+//        this.inventory = inventory;
+//    }
+//
+//    public VendingMachine() {
+//
+//    }
 
     public Map<String, Item> getInventory() {
         return inventory;
