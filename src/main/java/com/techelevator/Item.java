@@ -5,11 +5,14 @@ public class Item {
     private String productName;
     private int price;
     private String dispenseMessage;
+    private int itemCount;
 
-    public Item(String productName, int price, String dispenseMessage) {
+
+    public Item(String productName, int price, String dispenseMessage, int itemCount) {
         this.productName = productName;
         this.price = price;
         this.dispenseMessage = dispenseMessage;
+        this.itemCount = 5;
     }
 
     public String getProductName() {
@@ -22,5 +25,9 @@ public class Item {
 
     public String getDispenseMessage() {
         return dispenseMessage;
+    }
+
+    public int getItemCount() {
+        return itemCount;
     }
 }

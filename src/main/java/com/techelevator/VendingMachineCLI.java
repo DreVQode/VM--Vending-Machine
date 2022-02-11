@@ -15,6 +15,10 @@ public class VendingMachineCLI {
 	}
 
 	public void run() {
+		VendingMachine vendingMachine = new VendingMachine();
+		vendingMachine.getInventory();
+
+
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -25,6 +29,7 @@ public class VendingMachineCLI {
 			}
 		}
 	}
+
 
 	public static void main(String[] args) {
 		Menu menu = new Menu(System.in, System.out);
