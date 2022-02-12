@@ -37,8 +37,7 @@ public class VendingMachineCLI {
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
-					System.out.println(entry.getKey() + " " + entry.getValue().getProductName());
-//					TODO: add other values
+					System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice());
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				start2ndMenu = true;
@@ -50,11 +49,15 @@ public class VendingMachineCLI {
 						int newBalance = vendoMatic800.addFeedMoney(feed);
 						System.out.println("Your new balance is " + newBalance);
 					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
-						String slotIdentifier = "A1";
-//						TODO: get slot identifier from user input
-						try {
-							Item item = vendoMatic800.getProduct(slotIdentifier);
-							System.out.println("You just bought " + item.getProductName() + item.getDispenseMessage());
+						for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
+							System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice());
+						}
+						System.out.println("Make your selection ");
+							String slotIdentifier = keyboard.nextLine();
+						try { Item item = vendoMatic800.getProduct(slotIdentifier);
+							System.out.println("You selected " + slotIdentifier + " " + item.getProductName()+ " $" + item.getPrice());
+//							Item item = vendoMatic800.getProduct(slotIdentifier);
+							System.out.println("You just bought " + item.getProductName() + " " + item.getDispenseMessage());
 						} catch (InvalidTransactionException e) {
 							System.out.println("Something went wrong " + e.getMessage());
 						}

@@ -59,6 +59,10 @@ public class VendingMachine {
         return balance;
     }
 
+//    public String userInput(String slotIdentifier) throws NullPointerException {
+//        return inventory.get(slotIdentifier).toString();
+//    }
+
     public int getChange(){
         int change = balance;
         balance = 0;
