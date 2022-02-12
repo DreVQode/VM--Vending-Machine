@@ -25,9 +25,6 @@ public class VendingMachine {
         return inventory;
     }
 
-    public int getMachineBalance() {
-        return machineBalance;
-    }
 
     public void loadInventory(String fileName) throws FileNotFoundException {
         File inputFile = new File(fileName);
@@ -58,10 +55,11 @@ public class VendingMachine {
         balance += feedMoney * 100;
         return balance;
     }
-
-//    public String userInput(String slotIdentifier) throws NullPointerException {
-//        return inventory.get(slotIdentifier).toString();
-//    }
+    public int getMachineBalance(Item item) {
+        machineBalance = balance;
+//        machineBalance -= item.getPrice();
+        return machineBalance;
+    }
 
     public int getChange(){
         int change = balance;
