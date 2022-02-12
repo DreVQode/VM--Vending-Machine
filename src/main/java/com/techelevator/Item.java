@@ -30,4 +30,8 @@ public class Item {
     public int getItemCount() {
         return itemCount;
     }
+
+    public void reduceItemCount(){
+        itemCount--;
+    }
 }
