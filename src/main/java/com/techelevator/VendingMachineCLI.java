@@ -47,7 +47,7 @@ public class VendingMachineCLI {
 					if (choice2.equals(SECOND_MENU_FEED_MONEY)) {
 						int feed = getFeedMoney();
 						int newBalance = vendoMatic800.addFeedMoney(feed);
-						System.out.println("Your new balance is " + newBalance);
+						System.out.println("Current Money Provided: $" + newBalance);
 					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
 						for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
 							System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice());
@@ -55,7 +55,7 @@ public class VendingMachineCLI {
 						System.out.println("Make your selection ");
 							String slotIdentifier = keyboard.nextLine();
 						try { Item item = vendoMatic800.getProduct(slotIdentifier);
-							System.out.println("You bought " + slotIdentifier + " " + item.getProductName()+ " $" + item.getPrice() + " " + item.getDispenseMessage());
+							System.out.println("You bought " + slotIdentifier + " " + item.getProductName()+ " $" + item.getPrice() + " " + item.getDispenseMessage() + " " + item.getItemCount() + " in stock");
 							System.out.println("Your remaining balance is " + vendoMatic800.getMachineBalance(item));
 						} catch (InvalidTransactionException e) {
 							System.out.println("Something went wrong " + e.getMessage());
