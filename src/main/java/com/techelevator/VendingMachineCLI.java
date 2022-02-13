@@ -20,6 +20,7 @@ public class VendingMachineCLI {
 	private Scanner keyboard = new Scanner(System.in);
 
 	private Menu menu;
+	private static final Log logger = new Log("Log.txt");
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -48,6 +49,8 @@ public class VendingMachineCLI {
 						int feed = getFeedMoney();
 						int newBalance = vendoMatic800.addFeedMoney(feed);
 						System.out.println("Current Money Provided: $" + newBalance);
+						logger.write(Log.insertDate() + " FEED MONEY: $" + vendoMatic800.getBalance() + " $" + newBalance);
+//						TODO: need to add starting balance
 					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
 						for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
 							System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice());
@@ -57,14 +60,19 @@ public class VendingMachineCLI {
 						try { Item item = vendoMatic800.getProduct(slotIdentifier);
 							System.out.println("You bought " + slotIdentifier + " " + item.getProductName()+ " $" + item.getPrice() + " " + item.getDispenseMessage() + " " + item.getItemCount() + " in stock");
 							System.out.println("Your remaining balance is " + vendoMatic800.getMachineBalance(item));
+							logger.write(Log.insertDate() + " " + item.getProductName() + " " + slotIdentifier + " $" + vendoMatic800.getBalance() + " $" + vendoMatic800.getMachineBalance(item) );
+//						TODO: need to add starting balance
 						} catch (InvalidTransactionException e) {
 							System.out.println("Something went wrong " + e.getMessage());
 						}
 					} else if (choice2.equals(SECOND_MENU_FINISH_TRANSACTION)) {
 						start2ndMenu = false;
 						int change = vendoMatic800.getChange();
-//						TODO: display as quarters, dimes, nickels
+//						TODO: display as quarters, dimes, nickels BIG DECIMAL?
 						System.out.println("Your change is $" + change);
+						logger.write(Log.insertDate() + " GIVE CHANGE: " + " $" + change + " $" + vendoMatic800.getBalance());
+						logger.close();
+//						TODO: did not print to log?
 					}
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {

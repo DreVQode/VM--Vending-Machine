@@ -21,6 +21,7 @@ public class VendingMachine {
     public int getBalance() {
     return balance;
 }
+
     public Map<String, Item> getInventory() {
         return inventory;
     }
@@ -57,7 +58,6 @@ public class VendingMachine {
     }
     public int getMachineBalance(Item item) {
         machineBalance = balance;
-//        machineBalance -= item.getPrice();
         return machineBalance;
     }
 
