@@ -3,6 +3,7 @@ package com.techelevator;
 import com.techelevator.view.Menu;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -38,7 +39,7 @@ public class VendingMachineCLI {
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
-					System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice() + " " + entry.getValue().getItemCount() + " in stock");
+					System.out.printf("%s %s $%.2f - %d in stock%n", entry.getKey(), entry.getValue().getProductName(),penniesToDollars(entry.getValue().getPrice()), entry.getValue().getItemCount());
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				start2ndMenu = true;
@@ -47,32 +48,34 @@ public class VendingMachineCLI {
 
 					if (choice2.equals(SECOND_MENU_FEED_MONEY)) {
 						int feed = getFeedMoney();
+						int oldBalance = vendoMatic800.getBalance();
 						int newBalance = vendoMatic800.addFeedMoney(feed);
-						System.out.println("Current Money Provided: $" + newBalance);
-						logger.write(Log.insertDate() + " FEED MONEY: $" + vendoMatic800.getBalance() + " $" + newBalance);
-//						TODO: need to add starting balance
+						System.out.printf("Current Money Provided: $%.2f%n",penniesToDollars(newBalance));
+						String logMessage = String.format("%s FEED MONEY: $%.2f $%.2f", Log.insertDate(), penniesToDollars(oldBalance), penniesToDollars(newBalance));
+						log(logMessage);
 					} else if (choice2.equals(SECOND_MENU_SELECT_PRODUCT)) {
 						for(Map.Entry<String,Item> entry : vendoMatic800.getInventory().entrySet()) {
-							System.out.println(entry.getKey() + " " + entry.getValue().getProductName() + " $" + entry.getValue().getPrice());
+							System.out.printf("%s %s $%.2f%n", entry.getKey(), entry.getValue().getProductName(),penniesToDollars(entry.getValue().getPrice()));
 						}
 						System.out.println("Make your selection ");
 							String slotIdentifier = keyboard.nextLine();
+							int oldBalance = vendoMatic800.getBalance();
 						try { Item item = vendoMatic800.getProduct(slotIdentifier);
-							System.out.println("You bought " + slotIdentifier + " " + item.getProductName()+ " $" + item.getPrice() + " " + item.getDispenseMessage() + " " + item.getItemCount() + " in stock");
-							System.out.println("Your remaining balance is " + vendoMatic800.getMachineBalance(item));
-							logger.write(Log.insertDate() + " " + item.getProductName() + " " + slotIdentifier + " $" + vendoMatic800.getBalance() + " $" + vendoMatic800.getMachineBalance(item) );
-//						TODO: need to add starting balance
+							System.out.printf("You bought %s %s for $%.2f ~%s~ %d left in stock%n", slotIdentifier, item.getProductName(),penniesToDollars(item.getPrice()), item.getDispenseMessage(), item.getItemCount());
+							System.out.printf("Your remaining balance is $%.2f%n",penniesToDollars(vendoMatic800.getMachineBalance(item)));
+							String logMessage = String.format("%s %s %s $%.2f $%2f", Log.insertDate(),
+									item.getProductName(), slotIdentifier, penniesToDollars(oldBalance), penniesToDollars(vendoMatic800.getMachineBalance(item)));
+							log(logMessage);
 						} catch (InvalidTransactionException e) {
 							System.out.println("Something went wrong " + e.getMessage());
 						}
 					} else if (choice2.equals(SECOND_MENU_FINISH_TRANSACTION)) {
 						start2ndMenu = false;
 						int change = vendoMatic800.getChange();
-//						TODO: display as quarters, dimes, nickels BIG DECIMAL?
-						System.out.println("Your change is $" + change);
-						logger.write(Log.insertDate() + " GIVE CHANGE: " + " $" + change + " $" + vendoMatic800.getBalance());
-						logger.close();
-//						TODO: did not print to log?
+//						TODO: display as quarters, dimes, nickels
+						System.out.printf("Your change is $%.2f%n",penniesToDollars(change));
+						String logMessage = String.format("%s GIVE CHANGE: $%.2f $%2f", Log.insertDate(), penniesToDollars(change), penniesToDollars(vendoMatic800.getBalance()));
+						log(logMessage);
 					}
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
@@ -81,6 +84,14 @@ public class VendingMachineCLI {
 		}
 
 
+	}
+
+	private void log(String logMessage) {
+		try {
+			logger.write(logMessage);
+		} catch (IOException e) {
+			System.out.println("Couldn't log message");
+		}
 	}
 
 	private int getFeedMoney() {
@@ -97,6 +108,11 @@ public class VendingMachineCLI {
 			System.out.println("Money input invalid");
 		}
 		return feedBalance;
+	}
+
+	public static double penniesToDollars(int pennies) {
+		double dollars = pennies/100.0;
+		return dollars;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {

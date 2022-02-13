@@ -5,42 +5,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Log implements Closeable {
+public class Log {
 
-    private File logFile;
-    private PrintWriter writer;
-    static Log logger = new Log("Log.txt");
+    private String fileName;
 
-    public Log(String File){
-        this.logFile = new File("Log.txt");
-
-        if(!logFile.exists()){
-            try {
-                this.writer = new PrintWriter(this.logFile);
-            } catch (FileNotFoundException e) {
-                e.getMessage();
-            }
-        } else {
-            try {
-                this.writer = new PrintWriter(new FileWriter(this.logFile, true));
-            } catch (IOException e) {
-                e.getMessage();
-            }
-        }
+    public Log(String fileName) {
+        this.fileName = fileName;
     }
-    public void write(String logMessage) {
-        this.writer.println(logMessage);
-        this.writer.flush();
-    }
-    @Override
-    public void close() {
-        this.writer.close();
+
+    public void write(String logMessage) throws IOException {
+        File logFile = new File(fileName);
+
+            try(PrintWriter p = new PrintWriter((new FileWriter(logFile, true)))) {
+                p.println(logMessage);
+                p.flush();
+            }
+
     }
 
     public static String insertDate() {
 
-        DateFormat dateFormat2 = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
-        String dateString2 = dateFormat2.format(new Date()).toString();
-        return dateString2;
+        DateFormat dateFormatting = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+        return dateFormatting.format(new Date());
     }
 }

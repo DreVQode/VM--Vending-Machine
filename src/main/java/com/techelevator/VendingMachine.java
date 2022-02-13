@@ -11,13 +11,7 @@ public class VendingMachine {
     private int balance;
     private int machineBalance;
 
-//    public VendingMachine(Map inventory) {
-//        this.inventory = inventory;
-//    }
-//
-//    public VendingMachine() {
-//
-//    }
+
     public int getBalance() {
     return balance;
 }
