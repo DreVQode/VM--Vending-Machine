@@ -58,12 +58,12 @@ public class VendingMachineCLI {
 							System.out.printf("%s %s $%.2f%n", entry.getKey(), entry.getValue().getProductName(),penniesToDollars(entry.getValue().getPrice()));
 						}
 						System.out.println("Make your selection ");
-							String slotIdentifier = keyboard.nextLine();
+							String slotIdentifier = keyboard.nextLine().toUpperCase();
 							int oldBalance = vendoMatic800.getBalance();
 						try { Item item = vendoMatic800.getProduct(slotIdentifier);
 							System.out.printf("You bought %s %s for $%.2f ~%s~ %d left in stock%n", slotIdentifier, item.getProductName(),penniesToDollars(item.getPrice()), item.getDispenseMessage(), item.getItemCount());
 							System.out.printf("Your remaining balance is $%.2f%n",penniesToDollars(vendoMatic800.getMachineBalance(item)));
-							String logMessage = String.format("%s %s %s $%.2f $%2f", Log.insertDate(),
+							String logMessage = String.format("%s %s %s $%.2f $%.2f", Log.insertDate(),
 									item.getProductName(), slotIdentifier, penniesToDollars(oldBalance), penniesToDollars(vendoMatic800.getMachineBalance(item)));
 							log(logMessage);
 						} catch (InvalidTransactionException e) {
@@ -74,7 +74,7 @@ public class VendingMachineCLI {
 						int change = vendoMatic800.getChange();
 //						TODO: display as quarters, dimes, nickels
 						System.out.printf("Your change is $%.2f%n",penniesToDollars(change));
-						String logMessage = String.format("%s GIVE CHANGE: $%.2f $%2f", Log.insertDate(), penniesToDollars(change), penniesToDollars(vendoMatic800.getBalance()));
+						String logMessage = String.format("%s GIVE CHANGE: $%.2f $%.2f", Log.insertDate(), penniesToDollars(change), penniesToDollars(vendoMatic800.getBalance()));
 						log(logMessage);
 					}
 				}
