@@ -7,31 +7,19 @@ import org.junit.Test;
 
 public class VendingMachineTest extends TestCase {
 
+    private VendingMachine vendingMachine;
     private int balance;
 
-//    @Before
-//    public final void setUp() {VendingMachine vendingMachine = new VendingMachine(); this.balance = 300;}
+
+    @Before
+    public final void setUp() {VendingMachine vendingMachine = new VendingMachine();}
 
     @Test
-    public void testGetBalance() {
-        VendingMachine vendingMachine = new VendingMachine();
-
-        int result = vendingMachine.getBalance();
-        Assert.assertEquals(300, result);
-    }
-
-    public void testGetInventory() {
-
-    }
-
-    public void testLoadInventory() {
-    }
-
     public void testAddFeedMoney() {
+
+        Assert.assertEquals(500, vendingMachine.addFeedMoney(5));
     }
 
-    public void testGetMachineBalance() {
-    }
 
     public void testGetChange() {
     }
@@ -39,6 +27,5 @@ public class VendingMachineTest extends TestCase {
     public void testGetProduct() {
     }
 
-    public void testCoins() {
-    }
+
 }
