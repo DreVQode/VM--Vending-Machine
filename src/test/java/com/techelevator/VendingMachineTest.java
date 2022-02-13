@@ -5,14 +5,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class VendingMachineTest extends TestCase {
 
-    private VendingMachine vendingMachine;
-    private int balance;
+    private VendingMachine vendingMachine = new VendingMachine();
+    private int balance = 300;
+    private Map<String, Chip> testMap = new TreeMap<String, Chip>() {{
+        put("C4", Chip);}};
 
 
-    @Before
-    public final void setUp() {VendingMachine vendingMachine = new VendingMachine();}
 
     @Test
     public void testAddFeedMoney() {
@@ -21,10 +24,16 @@ public class VendingMachineTest extends TestCase {
     }
 
 
-    public void testGetChange() {
-    }
+//    public void testGetChange() {
+//
+//
+//        Assert.assertEquals(300, vendingMachine.getChange());
+//    }
+    @Test
+    public void testGetProduct() throws InvalidTransactionException {
 
-    public void testGetProduct() {
+
+        Assert.assertEquals("Heavy", vendingMachine.getProduct("C4"));
     }
 
 
