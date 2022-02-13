@@ -10,6 +10,9 @@ public class VendingMachine {
     private Map<String,Item> inventory = new TreeMap<>();
     private int balance;
     private int machineBalance;
+    private int quarter = 25;
+    private int dime = 10;
+    private int nickel = 5;
 
 
     public int getBalance() {
@@ -78,5 +81,21 @@ public class VendingMachine {
 
         item.reduceItemCount();
         return item;
+    }
+    public void coins(int change){
+        int quarterCount = 0;
+        int dimeCount = 0;
+        int nickelCount = 0;
+        while(machineBalance >=25){
+            machineBalance = machineBalance - quarter;
+            quarterCount++;
+        } while (machineBalance >=10) {
+            machineBalance = machineBalance - dime;
+            dimeCount++;
+        } while (machineBalance >=5) {
+            machineBalance = machineBalance - nickel;
+            nickelCount++;
+        }
+        System.out.printf("Your change is : %d quarters, %d dimes,%d nickels %n", quarterCount, dimeCount, nickelCount);
     }
 }

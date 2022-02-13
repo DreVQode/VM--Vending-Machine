@@ -74,6 +74,7 @@ public class VendingMachineCLI {
 						int change = vendoMatic800.getChange();
 //						TODO: display as quarters, dimes, nickels
 						System.out.printf("Your change is $%.2f%n",penniesToDollars(change));
+						vendoMatic800.coins(change);
 						String logMessage = String.format("%s GIVE CHANGE: $%.2f $%.2f", Log.insertDate(), penniesToDollars(change), penniesToDollars(vendoMatic800.getBalance()));
 						log(logMessage);
 					}
