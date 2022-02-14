@@ -82,7 +82,7 @@ public class VendingMachine {
         item.reduceItemCount();
         return item;
     }
-    public void coins(int change){
+    public String coins(int change){
         int quarterCount = 0;
         int dimeCount = 0;
         int nickelCount = 0;
@@ -96,6 +96,6 @@ public class VendingMachine {
             machineBalance = machineBalance - nickel;
             nickelCount++;
         }
-        System.out.printf("Your change is : %d quarters, %d dimes,%d nickels %n", quarterCount, dimeCount, nickelCount);
+        return String.format("Your change is : %d quarters, %d dimes, %d nickels %n", quarterCount, dimeCount, nickelCount);
     }
 }
